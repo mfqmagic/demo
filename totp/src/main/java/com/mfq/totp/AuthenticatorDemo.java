@@ -58,7 +58,7 @@ public class AuthenticatorDemo {
      * @return 秘密鍵
      */
     public static String generateSecretKey() {
-        SecureRandom sr = null;
+        SecureRandom sr;
         try {
             // 乱数生成
             sr = SecureRandom.getInstance(RANDOM_NUMBER_ALGORITHM);
@@ -68,8 +68,7 @@ public class AuthenticatorDemo {
             // 乱数をBase32に変換して秘密鍵とする。
             Base32 codec = new Base32();
             byte[] bEncodedKey = codec.encode(buffer);
-            String encodedKey = new String(bEncodedKey);
-            return encodedKey;
+            return new String(bEncodedKey);
         } catch (NoSuchAlgorithmException e) {
             System.err.println("乱数生成エラー");
         }
@@ -121,8 +120,8 @@ public class AuthenticatorDemo {
      * @param key    秘密鍵
      * @param timeNo 時間ウィンドウ番号
      * @return 認証コード
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeyException
+     * @throws NoSuchAlgorithmException 暗号例外
+     * @throws InvalidKeyException キー例外
      */
     private static int verifyCode(byte[] key, long timeNo) throws NoSuchAlgorithmException, InvalidKeyException {
         byte[] data = new byte[8];
