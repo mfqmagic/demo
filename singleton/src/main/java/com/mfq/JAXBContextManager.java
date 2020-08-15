@@ -16,7 +16,7 @@ public final class JAXBContextManager {
     /**
      * シングルトンマップ
      */
-    private static Map<Class<?>, JAXBContext> singletonMap = new ConcurrentHashMap<Class<?>, JAXBContext>();
+    private static final Map<Class<?>, JAXBContext> singletonMap = new HashMap<Class<?>, JAXBContext>();
 
     /**
      * インスタンス化不可
@@ -31,22 +31,14 @@ public final class JAXBContextManager {
      * @return JAXBContextオブジェクト
      * @throws JAXBException インスタントの例外
      */
-    public static JAXBContext getContext(Class<?> clazz) throws JAXBException {
-
-        // スレッドセーフの二重チェック
-        if (singletonMap.containsKey(clazz)) {
+    public static synchronized JAXBContext getContext(Class<?> clazz) throws JAXBException {
+        if (!singletonMap.containsKey(clazz)) {
+            // シングルトンマップに追加
+            JAXBContext context = JAXBContext.newInstance(clazz);
+            singletonMap.put(clazz, context);
+            return context;
+        } else {
             return singletonMap.get(clazz);
         }
-        synchronized (singletonMap) {
-            if (!singletonMap.containsKey(clazz)) {
-                // シングルトンマップに追加
-                JAXBContext context = JAXBContext.newInstance(clazz);
-                singletonMap.put(clazz, context);
-                return context;
-            } else {
-                return singletonMap.get(clazz);
-            }
-        }
-
     }
 }
