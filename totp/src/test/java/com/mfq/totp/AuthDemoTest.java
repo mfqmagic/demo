@@ -29,7 +29,7 @@ public class AuthDemoTest {
      * QRコード
      * otpauth://totp/<userId>?secret=<secretKey>&issuer=<applicationName>
      *
-     * @see <a href="https://github.com/google/google-authenticator/wiki/Key-Uri-Format">TOTP</a>
+     * @see <a href="https://github.com/google/google-authenticator/wiki/Key-Uri-Format">QR codes</a>
      */
     private final String format = google + "otpauth://totp/%s@%s?secret=%s&issuer=AuthDemoTest";
 
