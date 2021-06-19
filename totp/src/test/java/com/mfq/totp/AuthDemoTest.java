@@ -68,7 +68,7 @@ public class AuthDemoTest {
      * @throws IOException IO例外
      */
     private Image getImg(String url) throws IOException {
-        // chromeブラウザ
+        // ローカル使うchromeブラウザバージョン（https://chromedriver.chromium.org/）
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         // ブラウザ非表示
